@@ -20,6 +20,9 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Expanded(
+                child: SizedBox(),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -37,6 +40,9 @@ class _HomePageState extends State<HomePage> {
                     style: kHomePageTextStyle,
                   ),
                 ],
+              ),
+              Expanded(
+                child: SizedBox(),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,

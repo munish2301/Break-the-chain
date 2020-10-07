@@ -1,7 +1,9 @@
+import 'package:break_the_chain/coviddatascreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
+
 //Creating Homepage for our app!
 class HomePage extends StatefulWidget {
   static String homepageId = "HomePage";
@@ -20,6 +22,9 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Expanded(
+                child: SizedBox(),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -37,6 +42,9 @@ class _HomePageState extends State<HomePage> {
                     style: kHomePageTextStyle,
                   ),
                 ],
+              ),
+              Expanded(
+                child: SizedBox(),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -65,7 +73,12 @@ class _HomePageState extends State<HomePage> {
                         "Get Covid Stats",
                         style: kHomePageButtonStyle,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return CovidDataScreen();
+                        }));
+                      },
                     ),
                   ),
                 ],

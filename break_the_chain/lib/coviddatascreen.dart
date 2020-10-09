@@ -1,10 +1,16 @@
 import 'package:break_the_chain/homepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quartet/quartet.dart';
 
 import 'constants.dart';
+import 'covid_data.dart';
+
+CovidDataModel cm = CovidDataModel();
 
 class CovidDataScreen extends StatefulWidget {
+  final dynamic coviddata;
+  CovidDataScreen({@required this.coviddata});
   @override
   _CovidDataScreenState createState() => _CovidDataScreenState();
 }
@@ -18,6 +24,43 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
   int numOfDeaths;
   int numOfRecoveries;
   int numOfTotalCases;
+  @override
+  void initState() {
+    super.initState();
+    updateUI(widget.coviddata);
+  }
+
+  void updateUI(dynamic mydata) {
+    if (mydata == null) {
+      numOfActive = 0;
+      numOfDeaths = 0;
+      numOfRecoveries = 0;
+      numOfTotalCases = 0;
+      return;
+    }
+    setState(() {
+      bool isFine = ((state != null && district != null) &&
+          (mydata.containsKey(state) == true) &&
+          (mydata[state]['districtData'].containsKey(district) == true));
+      if (isFine == false) {
+        mydata = widget.coviddata;
+        state = '---';
+        district = '---';
+      }
+      numOfTotalCases = isFine
+          ? mydata[state]['districtData'][district]['confirmed']
+          : int.parse(mydata['cases_time_series'].last['totalconfirmed']);
+      numOfRecoveries = isFine
+          ? mydata[state]['districtData'][district]['recovered']
+          : int.parse(mydata['cases_time_series'].last['totalrecovered']);
+      numOfDeaths = isFine
+          ? mydata[state]['districtData'][district]['deceased']
+          : int.parse(mydata['cases_time_series'].last['totaldeceased']);
+      numOfActive = isFine
+          ? mydata[state]['districtData'][district]['active']
+          : numOfTotalCases - numOfRecoveries - numOfDeaths;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +91,26 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                 margin: EdgeInsets.all(15.0),
                 child: TextField(
                   controller: stateholder,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide(color: Colors.teal[400]),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide(color: Colors.teal, width: 2.0),
+                    ),
+                    fillColor: Colors.teal[400],
+                    focusColor: Colors.teal,
+                    hintText: 'Enter state here: ',
+                    hintStyle:
+                        TextStyle(color: Colors.teal[100], fontSize: 18.0),
+                  ),
                   cursorColor: Colors.teal[400],
                   style: TextStyle(color: Colors.teal[400], fontSize: 18.0),
                   onChanged: (value) {
                     state = value;
+                    state = titleCase(state.trim().toLowerCase());
                   },
                 ),
               ),
@@ -60,10 +119,26 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                 margin: EdgeInsets.all(15.0),
                 child: TextField(
                   controller: districtholder,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide(color: Colors.teal[400]),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide(color: Colors.teal, width: 2.0),
+                    ),
+                    fillColor: Colors.teal[400],
+                    focusColor: Colors.teal,
+                    hintText: 'Enter district here: ',
+                    hintStyle:
+                        TextStyle(color: Colors.teal[100], fontSize: 18.0),
+                  ),
                   cursorColor: Colors.teal[400],
                   style: TextStyle(color: Colors.teal[400], fontSize: 18.0),
                   onChanged: (value) {
                     district = value;
+                    district = titleCase(district.trim().toLowerCase());
                   },
                 ),
               ),
@@ -105,6 +180,7 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                           ),
                         ),
                         Flexible(
+                          //flex: 4,
                           child: Container(
                             margin: EdgeInsets.fromLTRB(0.0, 0.0, 15.0, 15.0),
                             height: 80.0,
@@ -119,7 +195,7 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                                 ),
                                 FittedBox(
                                   child: Text(
-                                    "Punjab",
+                                    state == null ? '---' : state,
                                     style: TextStyle(
                                       color: Colors.teal,
                                       fontWeight: FontWeight.bold,
@@ -148,7 +224,7 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                                 ),
                                 FittedBox(
                                   child: Text(
-                                    "Bathinda",
+                                    district == null ? '---' : district,
                                     style: TextStyle(
                                       color: Colors.teal,
                                       fontWeight: FontWeight.bold,
@@ -179,7 +255,7 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                                       fontWeight: FontWeight.w800),
                                 ),
                                 Text(
-                                  "1234567",
+                                  "$numOfTotalCases",
                                   style: TextStyle(
                                     color: Colors.red,
                                     fontWeight: FontWeight.bold,
@@ -204,7 +280,7 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                                       fontWeight: FontWeight.w800),
                                 ),
                                 Text(
-                                  "123456",
+                                  "$numOfActive",
                                   style: TextStyle(
                                     color: Colors.blue,
                                     fontWeight: FontWeight.bold,
@@ -233,7 +309,7 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                                       fontWeight: FontWeight.w800),
                                 ),
                                 Text(
-                                  "1234567",
+                                  "$numOfRecoveries",
                                   style: TextStyle(
                                     color: Colors.green,
                                     fontWeight: FontWeight.bold,
@@ -258,7 +334,7 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                                       fontWeight: FontWeight.w800),
                                 ),
                                 Text(
-                                  "12345",
+                                  "$numOfDeaths",
                                   style: TextStyle(
                                     color: Colors.black26,
                                     fontWeight: FontWeight.bold,
@@ -294,7 +370,14 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (state != null && district != null) {
+                          var coviddata = await cm.getDistrictStat();
+                          stateholder.clear();
+                          districtholder.clear();
+                          updateUI(coviddata);
+                        }
+                      },
                     ),
                   ),
                 ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'homepage.dart';
+import 'loadingscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
       home: HomePage(),
       routes: {
         HomePage.homepageId: (context) => HomePage(),
+        LoadingScreen.loadingScreenId: (context) => LoadingScreen(),
       },
     );
   }

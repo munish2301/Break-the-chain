@@ -1,4 +1,5 @@
 import 'package:break_the_chain/loadingscreen.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,8 @@ import 'loadingscreen.dart';
 //Creating Homepage for our app!
 class HomePage extends StatefulWidget {
   static String homepageId = "HomePage";
+  final List<CameraDescription> cameras;
+  HomePage(this.cameras);
   @override
   _HomePageState createState() => _HomePageState();
 }

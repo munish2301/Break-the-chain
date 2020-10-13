@@ -20,9 +20,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: HomePage(cameras),
       routes: {
-        HomePage.homepageId: (context) => HomePage(),
+        HomePage.homepageId: (context) => HomePage(cameras),
         LoadingScreen.loadingScreenId: (context) => LoadingScreen(),
       },
     );

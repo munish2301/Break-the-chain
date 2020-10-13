@@ -14,7 +14,7 @@ Install dependencies from `pubspec.yaml` by running `flutter packages get` from 
 There you go, you can now open the project. Enjoy!
 
 ## Built with
-* [Flutter](https://flutter.dev/) - Beautiful native apps in record time.
+* [Flutter](https://flutter.dev/) - Google’s UI toolkit for building beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.
 * [Android Studio](https://developer.android.com/studio/index.html/) - Tools for building apps on every type of Android device.
 
 ## Developers ##

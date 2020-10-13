@@ -1,5 +1,12 @@
 # BREAK-THE-CHAIN #
 
+## Developers ##
+
+  * [Keshav Thakur(18103003)](https://github.com/thakurkeshav)
+  * [Prathu Singal(18103085)](https://github.com/prathusingal)
+  * [Rajan Bhagat(18103091)](https://github.com/RajanBhagat08)
+  * [Munish Kumar Garg(18103120)](https://github.com/munish2301)
+
 ## Currently working on this project ##
 
 In this project, we are going to build an android application which has a feature of social distance monitoring. Along with that we have also added a feature of getting covid-19 stats of a particular district of India.

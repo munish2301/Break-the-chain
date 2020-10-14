@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tflite/tflite.dart';
 
 import 'constants.dart';
 import 'loadingscreen.dart';
@@ -17,6 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String _model = "";
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -70,7 +72,19 @@ class _HomePageState extends State<HomePage> {
                           "Start",
                           style: kHomePageButtonStyle,
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          setState(() {
+                            _model = "assets/ssd_mobilenet.tflite";
+                          });
+                          try {
+                            await Tflite.loadModel(
+                              model: "assets/ssd_mobilenet.tflite",
+                              labels: "assets/ssd_mobilenet.txt",
+                            );
+                          } on PlatformException {
+                            print("Failed to load the object detection model");
+                          }
+                        },
                       ),
                     ),
                     Container(

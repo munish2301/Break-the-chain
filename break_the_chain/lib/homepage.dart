@@ -19,6 +19,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String _model = "";
+  List<dynamic> _recognitions;
+  int _imageHeight = 0;
+  int _imageWidth = 0;
+  setRecognitions(recognitions, imageHeight, imageWidth) async {
+    setState(() {
+      _recognitions = recognitions;
+      _imageHeight = imageHeight;
+      _imageWidth = imageWidth;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

@@ -3,10 +3,14 @@ import 'dart:math' as math;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
+typedef void Callback(List<dynamic> list, int h, int w);
+
 class SocialDistancingApp extends StatefulWidget {
   static String socialDistancingId = "socialdistancing_id";
   final List<CameraDescription> cams;
-  SocialDistancingApp(this.cams);
+  final Callback setRecognitions;
+  final String model;
+  SocialDistancingApp(this.cams, this.model, this.setRecognitions);
   @override
   _SocialDistancingAppState createState() => _SocialDistancingAppState();
 }

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:break_the_chain/loadingscreen.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +10,7 @@ import 'package:tflite/tflite.dart';
 import 'access_camera.dart';
 import 'constants.dart';
 import 'loadingscreen.dart';
+import 'model.dart';
 
 //Creating Homepage for our app!
 class HomePage extends StatefulWidget {
@@ -134,6 +137,14 @@ class _HomePageState extends State<HomePage> {
             child: Stack(
               children: [
                 SocialDistancingApp(widget.cameras, _model, setRecognitions),
+                Model(
+                  _recognitions == null ? [] : _recognitions,
+                  math.max(_imageHeight, _imageWidth),
+                  math.min(_imageHeight, _imageWidth),
+                  screen.height,
+                  screen.width,
+                  _model,
+                ),
               ],
             ),
           );

@@ -11,6 +11,9 @@ class Model extends StatelessWidget {
   final String model;
   Model(this.results, this._imgHeight, this._imgWidth, this.screenH,
       this.screenW, this.model);
+  double distanceCalculation(double dx, double dy) {
+    return math.sqrt(math.pow(dx, 2) + math.pow(dy, 2));
+  }
 
   @override
   Widget build(BuildContext context) {

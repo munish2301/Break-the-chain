@@ -43,8 +43,20 @@ class _SocialDistancingAppState extends State<SocialDistancingApp> {
             threshold: 0.4,
             numResultsPerClass: 6,
           ).then((recognitions) {
-            int endTime = DateTime.now().millisecondsSinceEpoch;
+            print(recognitions);
+            List<dynamic> distilledRecognitions = [];
+            int endTime = new DateTime.now().millisecondsSinceEpoch;
             print("Detection took ${endTime - startTime}");
+            for (var recognition in recognitions) {
+              if (recognition != null &&
+                  recognition['detectedClass'] == "person" &&
+                  recognition['confidenceInClass'] > 0.62) {
+                distilledRecognitions.add(recognition);
+              }
+            }
+            widget.setRecognitions(
+                distilledRecognitions, img.height, img.width);
+            isDetecting = false;
           });
         }
       });

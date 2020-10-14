@@ -11,9 +11,99 @@ class Model extends StatelessWidget {
   final String model;
   Model(this.results, this._imgHeight, this._imgWidth, this.screenH,
       this.screenW, this.model);
+  double distanceCalculation(double dx, double dy, double dz) {
+    return math.sqrt(math.pow(dx, 2) + math.pow(dy, 2) + math.pow(dz, 2));
+  }
 
   @override
   Widget build(BuildContext context) {
+    int focalLength = 615;
+    List<dynamic> checkResults = [];
+    for (var res1 in results) {
+      res1["isSafe"] = true;
+      for (var res2 in results) {
+        print(res2["isSafe"]);
+        if (res1 == res2) {
+          continue;
+        } else {
+          var xCord1 = res1["rect"]["x"];
+          var wCord1 = res1["rect"]["w"];
+          var yCord1 = res1["rect"]["y"];
+          var hCord1 = res1["rect"]["h"];
+          var scaleW1, scaleH1, x1, y1, w1, h1;
+
+          if (screenH / screenW > _imgHeight / _imgWidth) {
+            scaleW1 = screenH / _imgHeight * _imgWidth;
+            scaleH1 = screenH;
+            var difW = (scaleW1 - screenW) / scaleW1;
+            x1 = (xCord1 - difW / 2) * scaleW1;
+            w1 = wCord1 * scaleW1;
+            if (xCord1 < difW / 2) w1 -= (difW / 2 - xCord1) * scaleW1;
+            y1 = yCord1 * scaleH1;
+            h1 = hCord1 * scaleH1;
+          } else {
+            scaleH1 = screenW / _imgHeight * _imgWidth;
+            scaleW1 = screenW;
+            var difH = (scaleH1 - screenH) / scaleH1;
+            x1 = xCord1 * scaleW1;
+            w1 = wCord1 * scaleW1;
+            y1 = (yCord1 - difH / 2) * scaleH1;
+            h1 = hCord1 * scaleH1;
+            if (yCord1 < difH / 2) h1 -= (difH / 2 - yCord1) * scaleH1;
+          }
+          var xCord2 = res2["rect"]["x"];
+          var wCord2 = res2["rect"]["w"];
+          var yCord2 = res2["rect"]["y"];
+          var hCord2 = res2["rect"]["h"];
+          var scaleW2, scaleH2, x2, y2, w2, h2;
+
+          if (screenH / screenW > _imgHeight / _imgWidth) {
+            scaleW2 = screenH / _imgHeight * _imgWidth;
+            scaleH2 = screenH;
+            var difW = (scaleW2 - screenW) / scaleW2;
+            x2 = (xCord2 - difW / 2) * scaleW2;
+            w2 = wCord2 * scaleW2;
+            if (xCord2 < difW / 2) w2 -= (difW / 2 - xCord2) * scaleW2;
+            y2 = yCord2 * scaleH2;
+            h2 = hCord2 * scaleH2;
+          } else {
+            scaleH2 = screenW / _imgHeight * _imgWidth;
+            scaleW2 = screenW;
+            var difH = (scaleH2 - screenH) / scaleH2;
+            x2 = xCord2 * scaleW2;
+            w2 = wCord2 * scaleW2;
+            y2 = (yCord2 - difH / 2) * scaleH2;
+            h2 = hCord2 * scaleH2;
+            if (yCord2 < difH / 2) h2 -= (difH / 2 - yCord2) * scaleH2;
+          }
+          var midx1 = x1 + (w1 / 2);
+          var midy1 = y1 + (h1 / 2);
+          var midx2 = x2 + (w2 / 2);
+          var midy2 = y2 + (h2 / 2);
+          var distanceCameraFromPerson1 = (165 * focalLength) / h1;
+          var distanceCameraFromPerson2 = (165 * focalLength) / h2;
+          var x_normal1 = (midx1 * distanceCameraFromPerson1) / focalLength;
+          var y_normal1 = (midy1 * distanceCameraFromPerson1) / focalLength;
+          var x_normal2 = (midx2 * distanceCameraFromPerson2) / focalLength;
+          var y_normal2 = (midy2 * distanceCameraFromPerson2) / focalLength;
+          print('midx1=$midx1');
+          print('midy1=$midy1');
+          print('midx2=$midx2');
+          print('midy2=$midy2');
+          var dist = distanceCalculation(
+              x_normal1 - x_normal2,
+              y_normal1 - y_normal2,
+              distanceCameraFromPerson1 - distanceCameraFromPerson2);
+          print('dist=$dist');
+          if (dist < 180.0) {
+            res1['isSafe'] = false;
+            break;
+          }
+        }
+      }
+      print('res1=$res1');
+      checkResults.add(res1);
+    }
     List<Widget> _renderBoxes() {
       return results.map((re) {
         var _x = re["rect"]["x"];

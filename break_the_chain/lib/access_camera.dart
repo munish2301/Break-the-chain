@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:tflite/tflite.dart';
 
 typedef void Callback(List<dynamic> list, int h, int w);
 
@@ -17,7 +18,7 @@ class SocialDistancingApp extends StatefulWidget {
 
 class _SocialDistancingAppState extends State<SocialDistancingApp> {
   CameraController controller;
-
+  bool isDetecting = false;
   @override
   void initState() {
     super.initState();
@@ -28,6 +29,25 @@ class _SocialDistancingAppState extends State<SocialDistancingApp> {
         return;
       }
       setState(() {});
+      controller.startImageStream((CameraImage img) {
+        if (!isDetecting) {
+          isDetecting = true;
+          int startTime = DateTime.now().millisecondsSinceEpoch;
+          Tflite.detectObjectOnFrame(
+            bytesList: img.planes.map((plane) {
+              return plane.bytes;
+            }).toList(),
+            model: "SSDMobileNet",
+            imageHeight: img.height,
+            imageWidth: img.width,
+            threshold: 0.4,
+            numResultsPerClass: 6,
+          ).then((recognitions) {
+            int endTime = DateTime.now().millisecondsSinceEpoch;
+            print("Detection took ${endTime - startTime}");
+          });
+        }
+      });
     });
   }
 

@@ -11,12 +11,13 @@ class Model extends StatelessWidget {
   final String model;
   Model(this.results, this._imgHeight, this._imgWidth, this.screenH,
       this.screenW, this.model);
-  double distanceCalculation(double dx, double dy) {
-    return math.sqrt(math.pow(dx, 2) + math.pow(dy, 2));
+  double distanceCalculation(double dx, double dy, double dz) {
+    return math.sqrt(math.pow(dx, 2) + math.pow(dy, 2) + math.pow(dz, 2));
   }
 
   @override
   Widget build(BuildContext context) {
+    int focalLength = 615;
     List<dynamic> checkResults = [];
     for (var res1 in results) {
       res1["isSafe"] = true;
@@ -79,12 +80,25 @@ class Model extends StatelessWidget {
           var midy1 = y1 + (h1 / 2);
           var midx2 = x2 + (w2 / 2);
           var midy2 = y2 + (h2 / 2);
+          var distanceCameraFromPerson1 = (165 * focalLength) / h1;
+          var distanceCameraFromPerson2 = (165 * focalLength) / h2;
+          var x_normal1 = (midx1 * distanceCameraFromPerson1) / focalLength;
+          var y_normal1 = (midy1 * distanceCameraFromPerson1) / focalLength;
+          var x_normal2 = (midx2 * distanceCameraFromPerson2) / focalLength;
+          var y_normal2 = (midy2 * distanceCameraFromPerson2) / focalLength;
           print('midx1=$midx1');
           print('midy1=$midy1');
           print('midx2=$midx2');
           print('midy2=$midy2');
-          var dist = distanceCalculation(midx1 - midx2, midy1 - midy2);
+          var dist = distanceCalculation(
+              x_normal1 - x_normal2,
+              y_normal1 - y_normal2,
+              distanceCameraFromPerson1 - distanceCameraFromPerson2);
           print('dist=$dist');
+          if (dist < 180.0) {
+            res1['isSafe'] = false;
+            break;
+          }
         }
       }
       print('res1=$res1');

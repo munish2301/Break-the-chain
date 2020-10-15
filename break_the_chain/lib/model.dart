@@ -17,6 +17,9 @@ class Model extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int numOfTotalDetected = results.length;
+    int numOfPersonsSafe = 0;
+    int numOfPersonsUnsafe = 0;
     int focalLength = 615;
     List<dynamic> checkResults = [];
     for (var res1 in results) {
@@ -86,16 +89,13 @@ class Model extends StatelessWidget {
           var y_normal1 = (midy1 * distanceCameraFromPerson1) / focalLength;
           var x_normal2 = (midx2 * distanceCameraFromPerson2) / focalLength;
           var y_normal2 = (midy2 * distanceCameraFromPerson2) / focalLength;
-          print('midx1=$midx1');
-          print('midy1=$midy1');
-          print('midx2=$midx2');
-          print('midy2=$midy2');
           var dist = distanceCalculation(
               x_normal1 - x_normal2,
               y_normal1 - y_normal2,
               distanceCameraFromPerson1 - distanceCameraFromPerson2);
           print('dist=$dist');
           if (dist < 180.0) {
+            numOfPersonsUnsafe++;
             res1['isSafe'] = false;
             break;
           }
@@ -104,8 +104,10 @@ class Model extends StatelessWidget {
       print('res1=$res1');
       checkResults.add(res1);
     }
+    numOfPersonsSafe = numOfTotalDetected - numOfPersonsUnsafe;
+
     List<Widget> _renderBoxes() {
-      return results.map((re) {
+      return checkResults.map((re) {
         var _x = re["rect"]["x"];
         var _w = re["rect"]["w"];
         var _y = re["rect"]["y"];
@@ -142,7 +144,7 @@ class Model extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(
                 color: re['isSafe'] == true ? Colors.green : Colors.red,
-                width: 4.0,
+                width: 5.0,
               ),
             ),
             child: Text(
@@ -163,6 +165,40 @@ class Model extends StatelessWidget {
     return Stack(children: [
       Stack(
         children: widgets,
+      ),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "# People Detected: $numOfTotalDetected",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15.0,
+              color: Colors.teal,
+              decoration: TextDecoration.none,
+            ),
+          ),
+          Text("# People in Safe Distance: $numOfPersonsSafe",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15.0,
+                color: Colors.green,
+                decoration: TextDecoration.none,
+              )),
+          Text(
+            "# People very Close: $numOfPersonsUnsafe",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15.0,
+              color: Colors.red,
+              decoration: TextDecoration.none,
+            ),
+          ),
+        ],
       ),
     ]);
   }

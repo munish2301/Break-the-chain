@@ -61,9 +61,9 @@ class _HomePageState extends State<HomePage> {
                                     Orientation.landscape
                                 ? 25.0
                                 : 50.0,
-                            backgroundColor: Colors.teal[50],
+                          
                             child: Image(
-                              image: AssetImage('images/playstore2.png'),
+                              image: AssetImage('images/playstore.png'),
                             ),
                           ),
                           Text(

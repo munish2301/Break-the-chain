@@ -1,18 +1,16 @@
 import 'dart:math' as math;
 
-import 'package:break_the_chain/loadingscreen.dart';
+import 'package:break_the_chain/access_camera.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tflite/tflite.dart';
 
-import 'access_camera.dart';
 import 'constants.dart';
 import 'loadingscreen.dart';
 import 'model.dart';
 
-//Creating Homepage for our app!
 class HomePage extends StatefulWidget {
   static String homepageId = "HomePage";
   final List<CameraDescription> cameras;
@@ -22,10 +20,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _model = "";
   List<dynamic> _recognitions;
   int _imageHeight = 0;
   int _imageWidth = 0;
+  String _model = "";
+
   setRecognitions(recognitions, imageHeight, imageWidth) async {
     setState(() {
       _recognitions = recognitions;
@@ -44,7 +43,6 @@ class _HomePageState extends State<HomePage> {
               return Future.value(false);
             },
             child: Scaffold(
-              backgroundColor: Colors.white,
               body: SafeArea(
                 child: Container(
                   child: Column(
@@ -59,16 +57,22 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
-                            radius: 50.0,
-                            backgroundColor: Colors.white,
+                            radius: MediaQuery.of(context).orientation ==
+                                    Orientation.landscape
+                                ? 25.0
+                                : 50.0,
+                            backgroundColor: Colors.teal[50],
                             child: Image(
-                              image: AssetImage('images/playstore.png'),
+                              image: AssetImage('images/playstore2.png'),
                             ),
                           ),
                           Text(
                             "Break the chain !",
                             textAlign: TextAlign.center,
-                            style: kHomePageTextStyle,
+                            style: MediaQuery.of(context).orientation ==
+                                    Orientation.landscape
+                                ? kHomePageTextStyle.copyWith(fontSize: 25.0)
+                                : kHomePageTextStyle,
                           ),
                         ],
                       ),
@@ -80,14 +84,24 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Container(
-                            margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+                            margin: MediaQuery.of(context).orientation ==
+                                    Orientation.landscape
+                                ? EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 0.0)
+                                : EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
                             child: RaisedButton(
                               color: Colors.teal[400],
                               focusColor: Colors.teal,
-                              padding: EdgeInsets.all(15.0),
+                              padding: MediaQuery.of(context).orientation ==
+                                      Orientation.landscape
+                                  ? EdgeInsets.all(15.0)
+                                  : EdgeInsets.all(8.0),
                               child: Text(
-                                "Start",
-                                style: kHomePageButtonStyle,
+                                "Start Social Distance Monitoring",
+                                style: MediaQuery.of(context).orientation ==
+                                        Orientation.landscape
+                                    ? kHomePageButtonStyle.copyWith(
+                                        fontSize: 15.0)
+                                    : kHomePageButtonStyle,
                               ),
                               onPressed: () async {
                                 setState(() {
@@ -106,16 +120,26 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+                            margin: MediaQuery.of(context).orientation ==
+                                    Orientation.landscape
+                                ? EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 0.0)
+                                : EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
                             child: RaisedButton(
                               color: Colors.teal[400],
                               focusColor: Colors.teal,
-                              padding: EdgeInsets.all(15.0),
+                              padding: MediaQuery.of(context).orientation ==
+                                      Orientation.landscape
+                                  ? EdgeInsets.all(15.0)
+                                  : EdgeInsets.all(8.0),
                               child: Text(
                                 "Get Covid Stats",
-                                style: kHomePageButtonStyle,
+                                style: MediaQuery.of(context).orientation ==
+                                        Orientation.landscape
+                                    ? kHomePageButtonStyle.copyWith(
+                                        fontSize: 15.0)
+                                    : kHomePageButtonStyle,
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 Navigator.pushNamed(
                                     context, LoadingScreen.loadingScreenId);
                               },

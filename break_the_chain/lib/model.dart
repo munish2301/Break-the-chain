@@ -18,6 +18,7 @@ class Model extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int focalLength = 615;
+    int numOfTotalDetected = results.length;
     List<dynamic> checkResults = [];
     for (var res1 in results) {
       res1["isSafe"] = true;
@@ -163,6 +164,22 @@ class Model extends StatelessWidget {
     return Stack(children: [
       Stack(
         children: widgets,
+      ),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "# People Detected: $numOfTotalDetected",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15.0,
+              color: Colors.teal,
+              decoration: TextDecoration.none,
+            ),
+          ),
+        ],
       ),
     ]);
   }

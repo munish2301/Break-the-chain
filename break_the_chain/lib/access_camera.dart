@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:tflite/tflite.dart';
 
 typedef void Callback(List<dynamic> list, int h, int w);
@@ -83,15 +84,39 @@ class _SocialDistancingAppState extends State<SocialDistancingApp> {
     var screenRatio = screenH / screenW;
     var previewRatio = previewH / previewW;
     return Scaffold(
-      body: OverflowBox(
-        maxHeight: screenRatio > previewRatio
-            ? screenH
-            : screenW / previewW * previewH,
-        maxWidth: screenRatio > previewRatio
-            ? screenH / previewH * previewW
-            : screenW,
-        child: CameraPreview(controller),
-      ),
+      body: NativeDeviceOrientationReader(builder: (context) {
+        NativeDeviceOrientation orientation =
+            NativeDeviceOrientationReader.orientation(context);
+
+        int turns;
+        switch (orientation) {
+          case NativeDeviceOrientation.landscapeLeft:
+            turns = -1;
+            break;
+          case NativeDeviceOrientation.landscapeRight:
+            turns = 1;
+            break;
+          case NativeDeviceOrientation.portraitDown:
+            turns = 2;
+            break;
+          default:
+            turns = 0;
+            break;
+        }
+
+        return RotatedBox(
+          quarterTurns: turns,
+          child: OverflowBox(
+            maxHeight: screenRatio > previewRatio
+                ? screenH
+                : screenW / previewW * previewH,
+            maxWidth: screenRatio > previewRatio
+                ? screenH / previewH * previewW
+                : screenW,
+            child: CameraPreview(controller),
+          ),
+        );
+      }),
     );
   }
 }

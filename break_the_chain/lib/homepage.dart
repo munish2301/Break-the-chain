@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:break_the_chain/access_camera.dart';
 import 'package:camera/camera.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +11,7 @@ import 'package:tflite/tflite.dart';
 import 'constants.dart';
 import 'loadingscreen.dart';
 import 'model.dart';
+import 'nointernet.dart';
 
 class HomePage extends StatefulWidget {
   static String homepageId = "HomePage";
@@ -61,7 +63,6 @@ class _HomePageState extends State<HomePage> {
                                     Orientation.landscape
                                 ? 25.0
                                 : 50.0,
-                          
                             child: Image(
                               image: AssetImage('images/playstore.png'),
                             ),
@@ -140,8 +141,15 @@ class _HomePageState extends State<HomePage> {
                                     : kHomePageButtonStyle,
                               ),
                               onPressed: () async {
-                                Navigator.pushNamed(
-                                    context, LoadingScreen.loadingScreenId);
+                                bool result =
+                                    await DataConnectionChecker().hasConnection;
+                                if (result == true) {
+                                  Navigator.pushNamed(
+                                      context, LoadingScreen.loadingScreenId);
+                                } else {
+                                  Navigator.pushNamed(context,
+                                      NoInternetScreen.noInternetScreenID);
+                                }
                               },
                             ),
                           ),

@@ -1,10 +1,12 @@
 import 'package:break_the_chain/homepage.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quartet/quartet.dart';
 
 import 'constants.dart';
 import 'covid_data.dart';
+import 'nointernet.dart';
 
 CovidDataModel cm = CovidDataModel();
 
@@ -404,11 +406,18 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                           ),
                         ),
                         onPressed: () async {
-                          if (state != null && district != null) {
-                            var coviddata = await cm.getDistrictStat();
-                            stateholder.clear();
-                            districtholder.clear();
-                            updateUI(coviddata);
+                          bool result =
+                              await DataConnectionChecker().hasConnection;
+                          if (result == false) {
+                            Navigator.pushNamed(
+                                context, NoInternetScreen.noInternetScreenID);
+                          } else {
+                            if (state != null && district != null) {
+                              var coviddata = await cm.getDistrictStat();
+                              stateholder.clear();
+                              districtholder.clear();
+                              updateUI(coviddata);
+                            }
                           }
                         },
                       ),

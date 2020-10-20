@@ -42,6 +42,7 @@ class _LoadingScreen2State extends State<LoadingScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.teal[50],
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -50,8 +51,12 @@ class _LoadingScreen2State extends State<LoadingScreen2> {
               color: Colors.teal[400],
               size: 100.0,
             ),
+            SizedBox(
+              height: 30.0,
+            ),
             Text(
               'Only I and You can Break the Chain!',
+              style: TextStyle(color: Colors.teal),
             ),
           ],
         ),

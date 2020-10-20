@@ -153,6 +153,32 @@ class _HomePageState extends State<HomePage> {
                               },
                             ),
                           ),
+                          Container(
+                            margin: MediaQuery.of(context).orientation ==
+                                    Orientation.landscape
+                                ? EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 0.0)
+                                : EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+                            child: RaisedButton(
+                              color: Colors.teal[400],
+                              focusColor: Colors.teal,
+                              padding: MediaQuery.of(context).orientation ==
+                                      Orientation.landscape
+                                  ? EdgeInsets.all(15.0)
+                                  : EdgeInsets.all(8.0),
+                              child: Text(
+                                "Get Health News",
+                                style: MediaQuery.of(context).orientation ==
+                                        Orientation.landscape
+                                    ? kHomePageButtonStyle.copyWith(
+                                        fontSize: 15.0)
+                                    : kHomePageButtonStyle,
+                              ),
+                              onPressed: () async {
+                                bool result =
+                                    await DataConnectionChecker().hasConnection;
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     ],

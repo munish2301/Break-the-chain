@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'homepage.dart';
 import 'news_data.dart';
+import 'newstile.dart';
 
 NewsDataModel cm = NewsDataModel();
 
@@ -34,6 +35,16 @@ class _NewsDataScreenState extends State<NewsDataScreen> {
 
   List<Widget> getListTiles(dynamic articles) {
     List<Widget> newsTiles = [];
+    for (var article in articles) {
+      newsTiles.add(
+        NewsTile(
+          url: article["url"],
+          urlToImage: article["urlToImage"],
+          title: article["title"],
+          description: article["description"],
+        ),
+      );
+    }
     return newsTiles;
   }
 

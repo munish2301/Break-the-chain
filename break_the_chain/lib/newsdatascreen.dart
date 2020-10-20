@@ -17,6 +17,22 @@ class NewsDataScreen extends StatefulWidget {
 class _NewsDataScreenState extends State<NewsDataScreen> {
   dynamic newsArticles;
   @override
+  void initState() {
+    super.initState();
+    updateUI(widget.newsdata);
+  }
+
+  void updateUI(dynamic mydata) {
+    if (mydata == null) {
+      newsArticles = {};
+    } else {
+      setState(() {
+        newsArticles = mydata;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {

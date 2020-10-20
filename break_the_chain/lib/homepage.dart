@@ -10,6 +10,7 @@ import 'package:tflite/tflite.dart';
 
 import 'constants.dart';
 import 'loadingscreen.dart';
+import 'loadingscreen2.dart';
 import 'model.dart';
 import 'nointernet.dart';
 
@@ -176,6 +177,13 @@ class _HomePageState extends State<HomePage> {
                               onPressed: () async {
                                 bool result =
                                     await DataConnectionChecker().hasConnection;
+                                if (result == true) {
+                                  Navigator.pushNamed(
+                                      context, LoadingScreen2.loadingScreenId2);
+                                } else {
+                                  Navigator.pushNamed(context,
+                                      NoInternetScreen.noInternetScreenID);
+                                }
                               },
                             ),
                           ),

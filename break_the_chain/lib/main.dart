@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'homepage.dart';
 import 'loadingscreen.dart';
+import 'loadingscreen2.dart';
 import 'nointernet.dart';
 
 List<CameraDescription> cameras;
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         HomePage.homepageId: (context) => HomePage(cameras),
         LoadingScreen.loadingScreenId: (context) => LoadingScreen(),
+        LoadingScreen2.loadingScreenId2: (context) => LoadingScreen2(),
         NoInternetScreen.noInternetScreenID: (context) => NoInternetScreen(),
       },
     );

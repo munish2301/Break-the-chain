@@ -32,6 +32,11 @@ class _NewsDataScreenState extends State<NewsDataScreen> {
     }
   }
 
+  List<Widget> getListTiles(dynamic articles) {
+    List<Widget> newsTiles = [];
+    return newsTiles;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -55,6 +60,13 @@ class _NewsDataScreenState extends State<NewsDataScreen> {
           title: Text(
             "Health News",
             style: kCovidDataTitleTextStyle,
+          ),
+        ),
+        body: SafeArea(
+          child: Container(
+            child: ListView(
+              children: getListTiles(newsArticles),
+            ),
           ),
         ),
       ),

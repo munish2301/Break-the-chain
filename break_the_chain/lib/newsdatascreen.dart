@@ -37,11 +37,25 @@ class _NewsDataScreenState extends State<NewsDataScreen> {
     List<Widget> newsTiles = [];
     for (var article in articles) {
       newsTiles.add(
-        NewsTile(
-          url: article["url"],
-          urlToImage: article["urlToImage"],
-          title: article["title"],
-          description: article["description"],
+        Container(
+          color: Colors.teal[50],
+          child: Container(
+            padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+            margin: EdgeInsets.fromLTRB(8.0, 5.0, 8.0, 5.0),
+            decoration: BoxDecoration(
+              color: Colors.teal[100],
+              borderRadius: BorderRadius.circular(6.0),
+              boxShadow: [
+                BoxShadow(color: Colors.teal, blurRadius: 0.5),
+              ],
+            ),
+            child: NewsTile(
+              url: article["url"],
+              urlToImage: article["urlToImage"],
+              title: article["title"],
+              description: article["description"],
+            ),
+          ),
         ),
       );
     }

@@ -23,6 +23,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'ElMessiri',
+      ),
       home: HomePage(cameras),
       routes: {
         HomePage.homepageId: (context) => HomePage(cameras),

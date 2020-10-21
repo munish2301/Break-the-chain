@@ -6,7 +6,7 @@ import 'homepage.dart';
 import 'news_data.dart';
 import 'newstile.dart';
 
-NewsDataModel cm = NewsDataModel();
+NewsDataModel nm = NewsDataModel();
 
 class NewsDataScreen extends StatefulWidget {
   final dynamic newsdata;
@@ -31,6 +31,12 @@ class _NewsDataScreenState extends State<NewsDataScreen> {
         newsArticles = mydata;
       });
     }
+  }
+
+  Future<bool> refreshListView() async {
+    dynamic newsData = await nm.getNews();
+    updateUI(newsData);
+    return true;
   }
 
   List<Widget> getListTiles(dynamic articles) {
@@ -89,8 +95,13 @@ class _NewsDataScreenState extends State<NewsDataScreen> {
         ),
         body: SafeArea(
           child: Container(
-            child: ListView(
-              children: getListTiles(newsArticles),
+            child: RefreshIndicator(
+              child: ListView(
+                children: getListTiles(newsArticles),
+              ),
+              onRefresh: refreshListView,
+              backgroundColor: Colors.teal[50],
+              color: Colors.teal,
             ),
           ),
         ),

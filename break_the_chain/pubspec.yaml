@@ -26,6 +26,9 @@ flutter:
     - images/
     - assets/
   fonts:
-    - family: Satisfy
+    - family: ElMessiri
       fonts:
-        - asset: fonts/Satisfy-Regular.ttf
+        - asset: fonts/ElMessiri-Bold.ttf
+        - asset: fonts/ElMessiri-Regular.ttf
+        - asset: fonts/ElMessiri-Medium.ttf
+        - asset: fonts/ElMessiri-SemiBold.ttf

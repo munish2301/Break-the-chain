@@ -84,13 +84,13 @@ class Model extends StatelessWidget {
           var midy2 = y2 + (h2 / 2);
           var distanceCameraFromPerson1 = (165 * focalLength) / (h1);
           var distanceCameraFromPerson2 = (165 * focalLength) / (h2);
-          var x_normal1 = (midx1 * distanceCameraFromPerson1) / focalLength;
-          var y_normal1 = (midy1 * distanceCameraFromPerson1) / focalLength;
-          var x_normal2 = (midx2 * distanceCameraFromPerson2) / focalLength;
-          var y_normal2 = (midy2 * distanceCameraFromPerson2) / focalLength;
+          var xNormal1 = (midx1 * distanceCameraFromPerson1) / focalLength;
+          var yNormal1 = (midy1 * distanceCameraFromPerson1) / focalLength;
+          var xNormal2 = (midx2 * distanceCameraFromPerson2) / focalLength;
+          var yNormal2 = (midy2 * distanceCameraFromPerson2) / focalLength;
           var dist = distanceCalculation(
-              x_normal1 - x_normal2,
-              y_normal1 - y_normal2,
+              xNormal1 - xNormal2,
+              yNormal1 - yNormal2,
               distanceCameraFromPerson1 - distanceCameraFromPerson2);
           // print('dist=$dist');
           if (dist < 200.0) {

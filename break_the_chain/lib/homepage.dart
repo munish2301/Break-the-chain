@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
               return Future.value(false);
             },
             child: Scaffold(
+              backgroundColor: Colors.teal[50],
               body: SafeArea(
                 child: Container(
                   child: Column(
@@ -64,8 +65,9 @@ class _HomePageState extends State<HomePage> {
                                     Orientation.landscape
                                 ? 25.0
                                 : 50.0,
+                            backgroundColor: Colors.teal[50],
                             child: Image(
-                              image: AssetImage('images/playstore.png'),
+                              image: AssetImage('images/playstore2.png'),
                             ),
                           ),
                           Text(
@@ -157,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             margin: MediaQuery.of(context).orientation ==
                                     Orientation.landscape
-                                ? EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 0.0)
+                                ? EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0)
                                 : EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
                             child: RaisedButton(
                               color: Colors.teal[400],
@@ -167,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                                   ? EdgeInsets.all(15.0)
                                   : EdgeInsets.all(8.0),
                               child: Text(
-                                "Get Health News",
+                                "Get Health related News",
                                 style: MediaQuery.of(context).orientation ==
                                         Orientation.landscape
                                     ? kHomePageButtonStyle.copyWith(
@@ -202,14 +204,13 @@ class _HomePageState extends State<HomePage> {
             },
             child: Stack(
               children: [
-                SocialDistancingApp(widget.cameras, _model, setRecognitions),
+                SocialDistancingApp(widget.cameras, setRecognitions),
                 Model(
                   _recognitions == null ? [] : _recognitions,
                   math.max(_imageHeight, _imageWidth),
                   math.min(_imageHeight, _imageWidth),
                   screen.height,
                   screen.width,
-                  _model,
                 ),
               ],
             ),

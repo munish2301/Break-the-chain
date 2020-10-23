@@ -8,9 +8,8 @@ class Model extends StatelessWidget {
   final int _imgWidth;
   final double screenH;
   final double screenW;
-  final String model;
   Model(this.results, this._imgHeight, this._imgWidth, this.screenH,
-      this.screenW, this.model);
+      this.screenW);
   double distanceCalculation(double dx, double dy, double dz) {
     return math.sqrt(math.pow(dx, 2) + math.pow(dy, 2) + math.pow(dz, 2));
   }
@@ -83,25 +82,25 @@ class Model extends StatelessWidget {
           var midy1 = y1 + (h1 / 2);
           var midx2 = x2 + (w2 / 2);
           var midy2 = y2 + (h2 / 2);
-          var distanceCameraFromPerson1 = (165 * focalLength) / h1;
-          var distanceCameraFromPerson2 = (165 * focalLength) / h2;
-          var xNormal1 = (midx1 * distanceCameraFromPerson1) / focalLength;
-          var yNormal1 = (midy1 * distanceCameraFromPerson1) / focalLength;
-          var xNormal2 = (midx2 * distanceCameraFromPerson2) / focalLength;
-          var yNormal2 = (midy2 * distanceCameraFromPerson2) / focalLength;
+          var distanceCameraFromPerson1 = (165 * focalLength) / (h1);
+          var distanceCameraFromPerson2 = (165 * focalLength) / (h2);
+          var x_normal1 = (midx1 * distanceCameraFromPerson1) / focalLength;
+          var y_normal1 = (midy1 * distanceCameraFromPerson1) / focalLength;
+          var x_normal2 = (midx2 * distanceCameraFromPerson2) / focalLength;
+          var y_normal2 = (midy2 * distanceCameraFromPerson2) / focalLength;
           var dist = distanceCalculation(
-              xNormal1 - xNormal2,
-              yNormal1 - yNormal2,
+              x_normal1 - x_normal2,
+              y_normal1 - y_normal2,
               distanceCameraFromPerson1 - distanceCameraFromPerson2);
-          print('dist=$dist');
-          if (dist < 180.0) {
+          // print('dist=$dist');
+          if (dist < 200.0) {
             numOfPersonsUnsafe++;
             res1['isSafe'] = false;
             break;
           }
         }
       }
-      print('res1=$res1');
+      // print('res1=$res1');
       checkResults.add(res1);
     }
     numOfPersonsSafe = numOfTotalDetected - numOfPersonsUnsafe;
@@ -174,6 +173,7 @@ class Model extends StatelessWidget {
             "# People Detected: $numOfTotalDetected",
             textAlign: TextAlign.left,
             style: TextStyle(
+              fontFamily: "ElMessiri",
               fontWeight: FontWeight.bold,
               fontSize: 15.0,
               color: Colors.teal,
@@ -183,6 +183,7 @@ class Model extends StatelessWidget {
           Text("# People in Safe Distance: $numOfPersonsSafe",
               textAlign: TextAlign.left,
               style: TextStyle(
+                fontFamily: "ElMessiri",
                 fontWeight: FontWeight.bold,
                 fontSize: 15.0,
                 color: Colors.green,
@@ -192,6 +193,7 @@ class Model extends StatelessWidget {
             "# People very Close: $numOfPersonsUnsafe",
             textAlign: TextAlign.left,
             style: TextStyle(
+              fontFamily: "ElMessiri",
               fontWeight: FontWeight.bold,
               fontSize: 15.0,
               color: Colors.red,

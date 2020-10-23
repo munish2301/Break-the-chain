@@ -11,8 +11,7 @@ class SocialDistancingApp extends StatefulWidget {
   static String socialDistancingId = "socialdistancing_id";
   final List<CameraDescription> cams;
   final Callback setRecognitions;
-  final String model;
-  SocialDistancingApp(this.cams, this.model, this.setRecognitions);
+  SocialDistancingApp(this.cams, this.setRecognitions);
   @override
   _SocialDistancingAppState createState() => _SocialDistancingAppState();
 }
@@ -20,6 +19,7 @@ class SocialDistancingApp extends StatefulWidget {
 class _SocialDistancingAppState extends State<SocialDistancingApp> {
   CameraController controller;
   bool isDetecting = false;
+
   @override
   void initState() {
     super.initState();
@@ -84,39 +84,41 @@ class _SocialDistancingAppState extends State<SocialDistancingApp> {
     var screenRatio = screenH / screenW;
     var previewRatio = previewH / previewW;
     return Scaffold(
-      body: NativeDeviceOrientationReader(builder: (context) {
-        NativeDeviceOrientation orientation =
-            NativeDeviceOrientationReader.orientation(context);
+      body: NativeDeviceOrientationReader(
+        builder: (context) {
+          NativeDeviceOrientation orientation =
+              NativeDeviceOrientationReader.orientation(context);
 
-        int turns;
-        switch (orientation) {
-          case NativeDeviceOrientation.landscapeLeft:
-            turns = -1;
-            break;
-          case NativeDeviceOrientation.landscapeRight:
-            turns = 1;
-            break;
-          case NativeDeviceOrientation.portraitDown:
-            turns = 2;
-            break;
-          default:
-            turns = 0;
-            break;
-        }
+          int turns;
+          switch (orientation) {
+            case NativeDeviceOrientation.landscapeLeft:
+              turns = -1;
+              break;
+            case NativeDeviceOrientation.landscapeRight:
+              turns = 1;
+              break;
+            case NativeDeviceOrientation.portraitDown:
+              turns = 2;
+              break;
+            default:
+              turns = 0;
+              break;
+          }
 
-        return RotatedBox(
-          quarterTurns: turns,
-          child: OverflowBox(
-            maxHeight: screenRatio > previewRatio
-                ? screenH
-                : screenW / previewW * previewH,
-            maxWidth: screenRatio > previewRatio
-                ? screenH / previewH * previewW
-                : screenW,
-            child: CameraPreview(controller),
-          ),
-        );
-      }),
+          return RotatedBox(
+            quarterTurns: turns,
+            child: OverflowBox(
+              maxHeight: screenRatio > previewRatio
+                  ? screenH
+                  : screenW / previewW * previewH,
+              maxWidth: screenRatio > previewRatio
+                  ? screenH / previewH * previewW
+                  : screenW,
+              child: CameraPreview(controller),
+            ),
+          );
+        },
+      ),
     );
   }
 }

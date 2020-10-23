@@ -37,6 +37,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.teal[50],
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +51,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
             ),
             Text(
               'Only I and You can Break the Chain!',
-              style: TextStyle(fontFamily: 'Satisfy'),
+              style: TextStyle(color: Colors.teal),
             ),
           ],
         ),

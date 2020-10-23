@@ -72,6 +72,7 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
         return Future.value(false);
       },
       child: Scaffold(
+        backgroundColor: Colors.teal[50],
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(
@@ -164,6 +165,7 @@ class _CovidDataScreenState extends State<CovidDataScreen> {
                   padding: EdgeInsets.all(15.0),
                   margin: EdgeInsets.all(15.0),
                   decoration: BoxDecoration(
+                    border: Border.all(color: Colors.teal),
                     borderRadius: BorderRadius.circular(30.0),
                     color: Colors.teal[50],
                   ),

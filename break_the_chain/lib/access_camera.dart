@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:break_the_chain/homepage.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
@@ -24,7 +25,7 @@ class _SocialDistancingAppState extends State<SocialDistancingApp> {
   void initState() {
     super.initState();
 
-    controller = CameraController(widget.cams[0], ResolutionPreset.high);
+    controller = CameraController(widget.cams[0], ResolutionPreset.ultraHigh);
     controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -61,6 +62,9 @@ class _SocialDistancingAppState extends State<SocialDistancingApp> {
           });
         }
       });
+    }).catchError((error) {
+      print(error);
+      Navigator.pushNamed(context, HomePage.homepageId);
     });
   }
 

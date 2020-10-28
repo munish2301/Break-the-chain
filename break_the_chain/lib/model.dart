@@ -143,7 +143,7 @@ class Model extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(
                 color: re['isSafe'] == true ? Colors.green : Colors.red,
-                width: 5.0,
+                width: 2.0,
               ),
             ),
             child: Text(

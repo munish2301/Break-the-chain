@@ -27,4 +27,8 @@ There you go, you can now open the project. Enjoy!
 ## Our project description ##
 
 In this project, we have build an android application which has a feature of social distance monitoring. Along with that we have also added two more features: one feature of getting covid-19 stats of a particular district of India and another feature of getting health news.
-We have also uploaded all the [UML Diagrams](https://github.com/munish2301/Break-the-chain/tree/main/UML%20Diagrams%20and%20Project%20Summary) and [Project Summary](https://github.com/munish2301/Break-the-chain/blob/main/UML%20Diagrams%20and%20Project%20Summary/Summary.pdf). For all the code, whatever we have completed till now, you can click [here](https://github.com/munish2301/Break-the-chain/tree/main/break_the_chain/lib).
+We have also uploaded all the [UML Diagrams](https://github.com/munish2301/Break-the-chain/tree/main/UML%20Diagrams%20and%20Project%20Summary) and [Project Summary](https://github.com/munish2301/Break-the-chain/blob/main/UML%20Diagrams%20and%20Project%20Summary/Summary.pdf). For all the code, whatever we have completed, you can click [here](https://github.com/munish2301/Break-the-chain/tree/main/break_the_chain/lib).
+
+## Social distance monitoring demo ##
+
+![Demo](https://github.com/munish2301/Break-the-chain/blob/main/Project%20Images/Social-Distance-Monitoring-Video.gif)
